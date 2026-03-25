@@ -1,59 +1,93 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>May's Digibooth</title>
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+﻿@{
+    ViewData["Title"] = "May's digibooth";
+}
 
-    <style>
-        body { background-color: #fff5f8; }
-        .booth-navbar {
-            background: white; margin: 20px auto; padding: 10px 30px;
-            border-radius: 50px; max-width: 1100px; display: flex;
-            justify-content: space-between; align-items: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .navbar-brand { font-family: 'Dancing Script', cursive; font-size: 28px; color: #333; text-decoration: none; }
-        .nav-links { display: flex; gap: 30px; align-items: center; }
-        .nav-links a { text-decoration: none; color: #666; font-size: 14px; transition: 0.3s; cursor: pointer; }
-        .nav-links a:hover { color: #ff69b4; }
-        .github-circle {
-            width: 35px; height: 35px; background: #f8f9fa; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: #333; transition: 0.3s; border: 1px solid #eee;
-        }
-        .github-circle:hover { background: #ff69b4; color: white; border-color: #ff69b4; }
-        .booth-container { max-width: 1100px; margin: 0 auto; font-family: 'Segoe UI', sans-serif; padding-bottom: 60px; }
-        .text-pink { color: #ff69b4; }
-        .option-card { cursor: pointer; border: 2px solid #f0f0f0; transition: 0.3s; border-radius: 25px; padding: 40px; background: white; }
-        .option-card:hover { border-color: #ff69b4; background: #fff5f8; transform: translateY(-5px); }
-        #video-container { position: relative; display: inline-block; border: 12px solid #fff; box-shadow: 0 15px 45px rgba(0,0,0,0.1); border-radius: 30px; overflow: hidden; background: #000; }
-        #video { transform: scaleX(-1); width: 640px; height: 480px; display: block; }
-        #overlay-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 20; }
-        .timer-display { font-size: 150px; color: white; font-weight: 900; text-shadow: 0 0 25px rgba(0,0,0,0.8); }
-        .reminder-display { font-size: 42px; color: #fff; background: rgba(255, 105, 180, 0.9); padding: 20px 50px; border-radius: 60px; font-weight: bold; }
-        .canvas-preview-container { background: #fdfdfd; padding: 40px; border-radius: 30px; display: flex; justify-content: center; align-items: center; min-height: 750px; border: 1px solid #eee; }
-        #mainCanvas { border-radius: 4px; box-shadow: 0 25px 60px rgba(0,0,0,0.2); background: white; cursor: crosshair; }
-        .custom-sidebar { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: left; }
-        .design-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-        .circle-btn { width: 45px; height: 45px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background-size: cover; }
-        .sticker-btn { width: 60px; height: 60px; background: #fcfcfc; border: 2px solid #eee; border-radius: 12px; padding: 8px; cursor: pointer; object-fit: contain; }
-        .sticker-btn.active { border-color: #ff69b4; background: #fff5f8; }
-        .control-panel { background: #f8f9fa; padding: 15px; border-radius: 15px; margin-top: 10px; border: 1px dashed #ddd; }
-    </style>
-</head>
-<body>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+<style>
+    /* New Menu Bar Styles */
+    .booth-navbar {
+        background: white;
+        margin: 20px auto;
+        padding: 10px 30px;
+        border-radius: 50px;
+        max-width: 1100px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .navbar-brand {
+        font-family: 'Dancing Script', cursive;
+        font-size: 28px;
+        color: #333;
+        text-decoration: none;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #666;
+        font-size: 14px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .nav-links a:hover { color: #ff69b4; }
+
+    .github-circle {
+        width: 35px;
+        height: 35px;
+        background: #f8f9fa;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #333;
+        transition: 0.3s;
+        border: 1px solid #eee;
+    }
+
+    .github-circle:hover { background: #ff69b4; color: white; border-color: #ff69b4; }
+
+    /* Modal Styling */
+    .modal-content { border-radius: 25px; border: none; }
+    .modal-header { border-bottom: none; padding-top: 30px; }
+    .modal-footer { border-top: none; }
+
+    /* Existing Booth Styles */
+    .booth-container { max-width: 1100px; margin: 0 auto; font-family: 'Segoe UI', sans-serif; padding-bottom: 60px; }
+    .text-pink { color: #ff69b4; }
+    .option-card { cursor: pointer; border: 2px solid #f0f0f0; transition: 0.3s; border-radius: 25px; padding: 40px; background: white; }
+    .option-card:hover { border-color: #ff69b4; background: #fff5f8; transform: translateY(-5px); }
+    #video-container { position: relative; display: inline-block; border: 12px solid #fff; box-shadow: 0 15px 45px rgba(0,0,0,0.1); border-radius: 30px; overflow: hidden; background: #000; }
+    #video { transform: scaleX(-1); width: 640px; height: 480px; display: block; }
+    #overlay-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 20; }
+    .timer-display { font-size: 150px; color: white; font-weight: 900; text-shadow: 0 0 25px rgba(0,0,0,0.8); }
+    .reminder-display { font-size: 42px; color: #fff; background: rgba(255, 105, 180, 0.9); padding: 20px 50px; border-radius: 60px; font-weight: bold; }
+    .canvas-preview-container { background: #fdfdfd; padding: 40px; border-radius: 30px; display: flex; justify-content: center; align-items: center; min-height: 750px; border: 1px solid #eee; }
+    #mainCanvas { border-radius: 4px; box-shadow: 0 25px 60px rgba(0,0,0,0.2); background: white; cursor: crosshair; }
+    .custom-sidebar { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); text-align: left; }
+    .design-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .circle-btn { width: 45px; height: 45px; border-radius: 50%; cursor: pointer; border: 3px solid #fff; box-shadow: 0 2px 5px rgba(0,0,0,0.1); background-size: cover; }
+    .sticker-btn { width: 60px; height: 60px; background: #fcfcfc; border: 2px solid #eee; border-radius: 12px; padding: 8px; cursor: pointer; object-fit: contain; }
+    .sticker-btn.active { border-color: #ff69b4; background: #fff5f8; }
+    .control-panel { background: #f8f9fa; padding: 15px; border-radius: 15px; margin-top: 10px; border: 1px dashed #ddd; }
+</style>
 
 <nav class="booth-navbar">
     <a href="#" class="navbar-brand">May's digibooth</a>
     <div class="nav-links">
         <a data-bs-toggle="modal" data-bs-target="#aboutModal">About</a>
         <a data-bs-toggle="modal" data-bs-target="#privacyModal">Privacy Policy</a>
-        <a href="https://github.com/May-Thet-Nwe" target="_blank" class="github-circle">
+        <a href="https://github.com" target="_blank" class="github-circle">
             <i class="bi bi-person-fill"></i>
         </a>
     </div>
@@ -87,26 +121,34 @@
         <div class="row g-4 align-items-start text-start">
             <div class="col-lg-7 text-center">
                 <div class="canvas-preview-container"><canvas id="mainCanvas"></canvas></div>
+                <p class="mt-2 text-muted small">Click to add • Drag to move • Slider to tilt</p>
             </div>
             <div class="col-lg-5">
                 <div class="custom-sidebar">
                     <h5 class="fw-bold">1. Background</h5>
                     <div class="design-grid mb-4">
                         <div class="circle-btn" style="background: conic-gradient(red, yellow, lime, aqua, blue, magenta, red);" onclick="document.getElementById('hiddenColorInput').click()"></div>
-                        <div class="circle-btn" style="background-image: url('images/leopard.jpg');" onclick="setPattern('images/leopard.jpg')"></div>
-                        <div class="circle-btn" style="background-image: url('images/pinkbow1.jpg');" onclick="setPattern('images/pinkbow1.jpg')"></div>
+                        <div class="circle-btn" style="background-image: url('/images/leopard.jpg');" onclick="setPattern('/images/leopard.jpg')"></div>
+                        <div class="circle-btn" style="background-image: url('/images/pinkbow1.jpg');" onclick="setPattern('/images/pinkbow1.jpg')"></div>
                         <input type="color" id="hiddenColorInput" style="visibility: hidden; width: 0;" oninput="onColorChange(this.value)">
                     </div>
 
                     <h5 class="fw-bold">2. Stickers</h5>
                     <div class="d-flex gap-2 mb-3">
-                        <img src="images/heart.png" id="btn-heart" class="sticker-btn" onclick="selectStickerType('images/heart.png', 'btn-heart')">
-                        <img src="images/bow.png" id="btn-bow" class="sticker-btn" onclick="selectStickerType('images/bow.png', 'btn-bow')">
+                        <img src="/images/heart.png" id="btn-heart" class="sticker-btn" onclick="selectStickerType('/images/heart.png', 'btn-heart')">
+                        <img src="/images/bow.png" id="btn-bow" class="sticker-btn" onclick="selectStickerType('/images/bow.png', 'btn-bow')">
                     </div>
 
                     <div id="sticker-controls" class="control-panel mb-4" style="display:none;">
+                        <label class="small fw-bold mb-1 d-block">Rotate Sticker:</label>
                         <input type="range" id="tiltSlider" class="form-range" min="-3.14" max="3.14" step="0.1" value="0" oninput="updateStickerRotation(this.value)">
-                        <button class="btn btn-danger btn-sm w-100 mt-2" onclick="deleteSelectedSticker()">🗑️ Remove</button>
+                        <button class="btn btn-danger btn-sm w-100 mt-2" onclick="deleteSelectedSticker()">🗑️ Remove Selected</button>
+                    </div>
+
+                    <h5 class="fw-bold">3. Digital Stamp</h5>
+                    <div class="mb-4">
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="checkDate" onchange="renderStrip()"><label class="form-check-label">Add Date</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="checkTime" onchange="renderStrip()"><label class="form-check-label">Add Time</label></div>
                     </div>
 
                     <button onclick="downloadImage()" class="btn btn-success btn-lg w-100 fw-bold mb-2">💾 DOWNLOAD</button>
@@ -119,91 +161,166 @@
 
 <div class="modal fade" id="aboutModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
-            <h5 class="text-pink fw-bold">About May's Booth</h5>
-            <p>Built for my friends so we can have photobooth memories anywhere! 💖</p>
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title fw-bold text-pink">About This Project</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                This project was initially created for my friend group! We love going to photobooths every time we hang out, so I wanted to build a digital version we can use anywhere. 💖<br><br>
+                Handcrafted with love by May.
+            </div>
+            <div class="modal-footer"><button type="button" class="btn btn-pink text-white rounded-pill px-4" style="background:#ff69b4" data-bs-dismiss="modal">Close</button></div>
         </div>
     </div>
 </div>
 
 <div class="modal fade" id="privacyModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content p-4">
-            <h5 class="fw-bold">Privacy</h5>
-            <p>Your photos stay on your device and are never saved to a server.</p>
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title fw-bold">Privacy Policy</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+            <div class="modal-body">
+                We value your privacy. Your photos are processed entirely in your browser and are never uploaded to our servers. Once you close the tab, your session data is cleared.
+            </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    let photoCount = 0, capturedImages = [], currentColor = "#ffffff", currentBgType = 'color';
-    let patternImg = new Image(), stickers = [], selectedStickerIndex = -1, isDragging = false, activeStickerUrl = null;
-    const video = document.getElementById('video'), timerEl = document.getElementById('timer'), reminderEl = document.getElementById('reminder');
+    let photoCount = 0, capturedImages = [], currentColor = "#ffffff";
+    let currentBgType = 'color', patternImg = new Image();
+    let stickers = [], selectedStickerIndex = -1, isDragging = false, activeStickerUrl = null;
+
+    const video = document.getElementById('video'),
+          timerEl = document.getElementById('timer'),
+          reminderEl = document.getElementById('reminder');
     const canvas = document.getElementById('mainCanvas'), ctx = canvas.getContext('2d');
 
-    navigator.mediaDevices.getUserMedia({ video: true }).then(s => video.srcObject = s).catch(e => alert("Camera access required!"));
+    navigator.mediaDevices.getUserMedia({ video: true }).then(s => video.srcObject = s);
 
     function selectPhotos(n) { photoCount = n; document.getElementById('step-selection').style.display = 'none'; document.getElementById('step-capture').style.display = 'block'; }
 
     document.getElementById('startCaptureBtn').addEventListener('click', async () => {
         document.getElementById('startCaptureBtn').style.display = 'none';
         for (let i = 0; i < photoCount; i++) {
-            reminderEl.innerText = `PHOTO #${i + 1}`; reminderEl.style.display = 'block'; timerEl.style.display = 'none';
-            await new Promise(r => setTimeout(r, 2000));
-            reminderEl.style.display = 'none'; timerEl.style.display = 'block';
-            for (let t = 5; t > 0; t--) { timerEl.innerText = t; await new Promise(r => setTimeout(r, 1000)); }
+            reminderEl.innerText = `PHOTO #${i + 1}`;
+            reminderEl.style.display = 'block';
+            timerEl.style.display = 'none';
+            await sleep(2000);
+            reminderEl.style.display = 'none';
+            timerEl.style.display = 'block';
+            for (let t = 5; t > 0; t--) {
+                timerEl.innerText = t;
+                await sleep(1000);
+            }
             timerEl.style.display = 'none';
             const tc = document.createElement('canvas'); tc.width = 640; tc.height = 480;
             const tctx = tc.getContext('2d'); tctx.translate(640, 0); tctx.scale(-1, 1); tctx.drawImage(video, 0, 0, 640, 480);
             capturedImages.push(tc);
             video.style.filter = "brightness(3)"; setTimeout(() => video.style.filter = "none", 150);
         }
-        document.getElementById('step-capture').style.display = 'none'; document.getElementById('step-customize').style.display = 'block'; renderStrip();
+        document.getElementById('step-capture').style.display = 'none';
+        document.getElementById('step-customize').style.display = 'block';
+        renderStrip();
     });
 
     function onColorChange(c) { currentBgType = 'color'; currentColor = c; renderStrip(); }
     function setPattern(url) { currentBgType = 'pattern'; patternImg.src = url; patternImg.onload = renderStrip; }
-    function selectStickerType(url, id) { activeStickerUrl = url; document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+
+    function selectStickerType(url, id) {
+        activeStickerUrl = url;
+        document.querySelectorAll('.sticker-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        selectedStickerIndex = -1;
+        toggleControls(false);
+        renderStrip();
+    }
 
     canvas.addEventListener('mousedown', (e) => {
-        const rect = canvas.getBoundingClientRect();
-        const x = (e.clientX - rect.left) * (canvas.width / rect.width), y = (e.clientY - rect.top) * (canvas.height / rect.height);
+        const pos = getMousePos(e);
         let found = -1;
-        stickers.forEach((s, i) => { if (Math.sqrt((x-s.x)**2 + (y-s.y)**2) < s.size/2) found = i; });
-        if (found !== -1) { selectedStickerIndex = found; isDragging = true; document.getElementById('sticker-controls').style.display = 'block'; }
-        else if (activeStickerUrl) {
-            const img = new Image(); img.src = activeStickerUrl;
-            img.onload = () => { stickers.push({ img, x, y, size: 85, rotation: 0 }); selectedStickerIndex = stickers.length-1; renderStrip(); };
+        for (let i = stickers.length - 1; i >= 0; i--) {
+            const s = stickers[i];
+            const dist = Math.sqrt((pos.x - s.x) ** 2 + (pos.y - s.y) ** 2);
+            if (dist < s.size / 2) { found = i; break; }
         }
+        if (found !== -1) {
+            selectedStickerIndex = found;
+            isDragging = true;
+            toggleControls(true, stickers[found].rotation);
+        } else if (activeStickerUrl) {
+            const img = new Image(); img.src = activeStickerUrl;
+            img.onload = () => {
+                stickers.push({ img, x: pos.x, y: pos.y, size: 85, rotation: 0 });
+                selectedStickerIndex = stickers.length - 1;
+                toggleControls(true, 0);
+                renderStrip();
+            };
+        } else {
+            selectedStickerIndex = -1;
+            toggleControls(false);
+        }
+        renderStrip();
     });
 
     canvas.addEventListener('mousemove', (e) => {
         if (isDragging && selectedStickerIndex !== -1) {
-            const rect = canvas.getBoundingClientRect();
-            stickers[selectedStickerIndex].x = (e.clientX - rect.left) * (canvas.width / rect.width);
-            stickers[selectedStickerIndex].y = (e.clientY - rect.top) * (canvas.height / rect.height);
+            const pos = getMousePos(e);
+            stickers[selectedStickerIndex].x = pos.x;
+            stickers[selectedStickerIndex].y = pos.y;
             renderStrip();
         }
     });
-    window.addEventListener('mouseup', () => isDragging = false);
 
-    function renderStrip() {
-        const imgW = 400, imgH = 300, padding = 25;
-        canvas.width = imgW + (padding * 2); canvas.height = (imgH * photoCount) + (padding * (photoCount + 1)) + 80;
-        ctx.fillStyle = (currentBgType === 'color') ? currentColor : ctx.createPattern(patternImg, 'repeat');
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        capturedImages.forEach((img, i) => ctx.drawImage(img, padding, padding + (i * (imgH + padding)), imgW, imgH));
-        stickers.forEach((s, i) => {
-            ctx.save(); ctx.translate(s.x, s.y); ctx.rotate(s.rotation); ctx.drawImage(s.img, -s.size/2, -s.size/2, s.size, s.size);
-            if (i === selectedStickerIndex) { ctx.strokeStyle = "#ff69b4"; ctx.strokeRect(-s.size/2-2, -s.size/2-2, s.size+4, s.size+4); }
-            ctx.restore();
-        });
+    window.addEventListener('mouseup', () => { isDragging = false; });
+    function toggleControls(show, rotValue = 0) {
+        const ctrl = document.getElementById('sticker-controls');
+        ctrl.style.display = show ? 'block' : 'none';
+        if (show) document.getElementById('tiltSlider').value = rotValue;
+    }
+    function updateStickerRotation(val) {
+        if (selectedStickerIndex !== -1) {
+            stickers[selectedStickerIndex].rotation = parseFloat(val);
+            renderStrip();
+        }
+    }
+    function deleteSelectedSticker() {
+        if (selectedStickerIndex !== -1) {
+            stickers.splice(selectedStickerIndex, 1);
+            selectedStickerIndex = -1;
+            toggleControls(false);
+            renderStrip();
+        }
+    }
+    function getMousePos(e) {
+        const rect = canvas.getBoundingClientRect();
+        return { x: (e.clientX - rect.left) * (canvas.width / rect.width), y: (e.clientY - rect.top) * (canvas.height / rect.height) };
     }
 
-    function updateStickerRotation(val) { if (selectedStickerIndex !== -1) { stickers[selectedStickerIndex].rotation = parseFloat(val); renderStrip(); } }
-    function deleteSelectedSticker() { if (selectedStickerIndex !== -1) { stickers.splice(selectedStickerIndex, 1); selectedStickerIndex = -1; renderStrip(); } }
-    function downloadImage() { const a = document.createElement('a'); a.download = `booth.png`; a.href = canvas.toDataURL("image/png"); a.click(); }
+    function renderStrip() {
+        const imgW = 400, imgH = 300, padding = 25, bottomExtra = 90;
+        canvas.width = imgW + (padding * 2);
+        canvas.height = (imgH * photoCount) + (padding * (photoCount + 1)) + bottomExtra;
+        if (currentBgType === 'color') { ctx.fillStyle = currentColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+        else { ctx.fillStyle = ctx.createPattern(patternImg, 'repeat'); ctx.fillRect(0, 0, canvas.width, canvas.height); }
+        capturedImages.forEach((img, i) => { ctx.drawImage(img, padding, padding + (i * (imgH + padding)), imgW, imgH); });
+        stickers.forEach((s, i) => {
+            ctx.save(); ctx.translate(s.x, s.y); ctx.rotate(s.rotation);
+            ctx.drawImage(s.img, -s.size / 2, -s.size / 2, s.size, s.size);
+            if (i === selectedStickerIndex) { ctx.strokeStyle = "#ff69b4"; ctx.lineWidth = 3; ctx.strokeRect(-s.size / 2 - 2, -s.size / 2 - 2, s.size + 4, s.size + 4); }
+            ctx.restore();
+        });
+        const addDate = document.getElementById('checkDate').checked;
+        const addTime = document.getElementById('checkTime').checked;
+        if (addDate || addTime) {
+            const now = new Date();
+            let txt = addDate ? now.toLocaleDateString('en-GB').replace(/\//g, '.') : "";
+            if (addDate && addTime) txt += "  ";
+            if (addTime) txt += now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+            ctx.font = "38px 'VT323'"; ctx.fillStyle = "#FF8C00";
+            ctx.shadowColor = "rgba(0,0,0,0.3)"; ctx.shadowBlur = 2;
+            ctx.fillText(txt, canvas.width - ctx.measureText(txt).width - 25, canvas.height - 30);
+            ctx.shadowBlur = 0;
+        }
+    }
+
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+    function downloadImage() { const a = document.createElement('a'); a.download = `booth-${Date.now()}.png`; a.href = canvas.toDataURL("image/png"); a.click(); }
 </script>
-</body>
-</html>
